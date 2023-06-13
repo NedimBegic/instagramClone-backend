@@ -2,7 +2,9 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const User = require("../models/User");
 
-// get users only for testing
+// desc     Get a user
+//@route    GET /:nickName
+// @acces   Public
 exports.getUser = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ nickName: req.params.nickName }).populate(
     "post"

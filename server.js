@@ -14,17 +14,18 @@ connectDB();
 const auth = require("./routes/auth");
 const user = require("./routes/user");
 const post = require("./routes/post");
-
-// Mount routes from bootcamp,courses file
-app.use("/auth", auth);
-app.use("/user", user);
-app.use("/post", post);
+const comment = require("./routes/comment");
 
 // Body parser for access req.body
 app.use(express.json());
 
 // Cookie parser
 app.use(cookieParser());
+// Mount routes from bootcamp,courses file
+app.use("/auth", auth);
+app.use("/user", user);
+app.use("/post", post);
+app.use("/comment", comment);
 
 // using middleware it has to be after calling routes and mounting them
 app.use(errorHandler);
