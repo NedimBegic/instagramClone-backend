@@ -22,10 +22,16 @@ exports.addComment = asyncHandler(async (req, res, next) => {
 //@route    GET /:id/comment
 // @acces   Public
 exports.getComments = asyncHandler(async (req, res, next) => {
-  const comments = await Comment.find().populate({
-    path: "user",
-    select: "photo ",
-  });
+  const comments = await Comment.find().populate([
+    {
+      path: "user",
+      select: "photo ",
+    },
+    {
+      path: "post",
+      select: "photo",
+    },
+  ]);
   res.status(200).json({
     success: true,
     data: comments,

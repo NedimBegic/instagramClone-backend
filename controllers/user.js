@@ -21,3 +21,14 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     data: user,
   });
 });
+
+// desc     Get all users
+//@route    GET /user
+// @acces   Public
+exports.getUsers = asyncHandler(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    success: true,
+    data: users,
+  });
+});
