@@ -1,4 +1,5 @@
 const ErrorResponse = require("../utils/errorResponse");
+const path = require("path");
 const asyncHandler = require("../middleware/async");
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
@@ -28,11 +29,37 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
 // @acces   Private
 exports.postPosts = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
-  console.log(req.body);
-  const post = await Post.create(req.body);
-  res.status(200).json({
-    success: true,
-    data: post,
+  if (!req.files) {
+    // if there is no file
+    return next(new ErrorResponse("Please upload a file", 400));
+  }
+  const file = req.files.file;
+  // Make sure that image is a photo
+  if (!file.mimetype.startsWith("image")) {
+    return next(new ErrorResponse("Please upload a image file", 400));
+  }
+
+  // CHeck size of file
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(new ErrorResponse("File size is to big", 400));
+  }
+
+  file.name = `${file.name.split(".")[0]}${req.user.nickName}${
+    path.parse(file.name).ext
+  }`;
+
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    if (err) {
+      console.log(err);
+      return next(new ErrorResponse("Problem with upload", 500));
+    }
+    // insert photo in body
+    req.body.photo = file.name;
+    const post = await Post.create(req.body);
+    res.status(200).json({
+      success: true,
+      data: post,
+    });
   });
 });
 

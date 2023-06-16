@@ -8,7 +8,7 @@ const User = require("../models/User");
 //@route    POST /api/v1/auth/register
 // @acces   Public
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, password, nickName } = req.body;
+  const { name, email, password, nickName, description } = req.body;
 
   // Create use
   const user = await User.create({
@@ -16,6 +16,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     name,
     email,
     password,
+    description,
   });
 
   sendtokenResponse(user, 200, res);

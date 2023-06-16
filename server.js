@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const dotenv = require("dotenv");
+const fileUpload = require("express-fileupload");
 // to get req.cookie running
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
@@ -19,6 +20,11 @@ const comment = require("./routes/comment");
 // Body parser for access req.body
 app.use(express.json());
 
+// for file upload
+app.use(fileUpload());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, "public")));
 // Cookie parser
 app.use(cookieParser());
 // Mount routes from bootcamp,courses file
