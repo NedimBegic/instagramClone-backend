@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const fileUpload = require("express-fileupload");
 // to get req.cookie running
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const connectDB = require("./config/db");
 dotenv.config({ path: "./config/.env" });
 const errorHandler = require("./middleware/error");
@@ -27,6 +28,12 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "public")));
 // Cookie parser
 app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 // Mount routes from bootcamp,courses file
 app.use("/auth", auth);
 app.use("/user", user);
