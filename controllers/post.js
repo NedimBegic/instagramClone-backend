@@ -55,7 +55,12 @@ exports.postPosts = asyncHandler(async (req, res, next) => {
     }
     // insert photo in body
     req.body.photo = file.name;
-    const post = await Post.create(req.body);
+    let post = await Post.create(req.body);
+    let today = new Date();
+    post = await Post.findByIdAndUpdate(
+      { _id: post._id },
+      { createdAt: today }
+    );
     res.status(200).json({
       success: true,
       data: post,
