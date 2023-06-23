@@ -11,7 +11,7 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
   const posts = await Post.find().populate([
     {
       path: "user",
-      select: "photo",
+      select: "photo nickName",
     },
     {
       path: "comment",
