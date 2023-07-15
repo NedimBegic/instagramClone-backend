@@ -7,6 +7,7 @@ const Comment = require("../models/Comment");
 // @acces   Public
 exports.addComment = asyncHandler(async (req, res, next) => {
   req.body.post = req.params.postId;
+  // we stored the user with the protext functionality in req object
   req.body.author = req.user.nickName;
   if (!req.body.comment) {
     return next(new ErrorResponse("Enter a valid comment", 400));
@@ -23,6 +24,26 @@ exports.addComment = asyncHandler(async (req, res, next) => {
 // @acces   Public
 exports.getComments = asyncHandler(async (req, res, next) => {
   const comments = await Comment.find().populate([
+    {
+      path: "user",
+      select: "photo ",
+    },
+    {
+      path: "post",
+      select: "photo",
+    },
+  ]);
+  res.status(200).json({
+    success: true,
+    data: comments,
+  });
+});
+
+// desc    Get comments from single post
+//@route    GET /comment/:postId
+// @acces   Public
+exports.getComment = asyncHandler(async (req, res, next) => {
+  const comments = await Comment.find({ post: req.params.postId }).populate([
     {
       path: "user",
       select: "photo ",
