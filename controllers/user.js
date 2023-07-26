@@ -39,12 +39,10 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 // @acces   Private
 exports.changeUserInfo = asyncHandler(async (req, res, next) => {
   const { description, name } = req.body;
-  console.log(req.params.nickName);
   const userUpdate = await User.findOneAndUpdate(
     { nickName: req.params.nickName },
     { description, name }
   );
-  console.log(userUpdate);
   res.status(200).json({
     success: true,
     data: userUpdate,
