@@ -32,6 +32,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 // Mount routes from bootcamp,courses file
@@ -43,4 +44,5 @@ app.use("/comment", comment);
 // using middleware it has to be after calling routes and mounting them
 app.use(errorHandler);
 PORT = process.env.PORT;
+
 app.listen(PORT || 5000, console.log(`Server is running on port ${PORT}`));
