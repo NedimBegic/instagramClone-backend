@@ -6,6 +6,7 @@
         understanding of various technologies and concepts including <code>useContext</code>, re-rendering components upon
         database changes, token-based authentication, working with cookies, and utilizing <code>getStaticProps</code> and
         <code>getStaticPaths</code> for dynamic user and post pages.</p>
+        <p>Visit page <a href='https://insta-clone-git-main-nedimbegic.vercel.app/'>here</a></p>
 
 <img src="https://i.ibb.co/fC73224/vsd.png" width=800 height=500/>
 
