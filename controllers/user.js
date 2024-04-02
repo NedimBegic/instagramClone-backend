@@ -27,12 +27,13 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 //@route    GET /user
 // @acces   Public
 exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find();
+  const users = await User.find().populate('post'); // Populate the post field for each user
   res.status(200).json({
     success: true,
     data: users,
   });
 });
+
 
 // desc     Change user info
 //@route    PUT /:nickName
